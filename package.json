@@ -1,6 +1,6 @@
 {
   "name": "chuki",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An ES6 library using template literals to enable composable widgets.",
   "main": "index.js",
   "scripts": {

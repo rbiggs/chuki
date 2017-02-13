@@ -4,17 +4,17 @@ const libraryName = 'chuki'
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src', 'chuki'),
+  entry: path.resolve(__dirname, './dev/app'),
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'chuki.js',
+    path: path.join(__dirname, './js'),
+    filename: 'app.js',
     library: libraryName,
     libraryTarget: 'umd',
     umdNamedDefine: true
   }, 
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
-      mangle: true,
+      mangle: false,
       compress: {
         warnings: false, // Suppress uglification warnings
         pure_getters: true,
