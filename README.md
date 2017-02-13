@@ -6,6 +6,10 @@ An ES6 library using template literals to enable composing widgets.
 
 This is a simple view template library that uses template literals. It also lets you add events, including delegated events, remove events, and add virtual stylesheets scoped to a component.
 
+Building
+--------
+Open your terminal, `cd` to this folder and run `npm i`. When it is done, you can build Chuki by running `webpack`. The result is put in `dist`. If you don't have Webpack installed globally, you'll need to run `npm i -g webpack` first.
+
 Creating a Component Instance
 -----------------------------
 
