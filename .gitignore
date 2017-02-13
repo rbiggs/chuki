@@ -1,0 +1,9 @@
+S_Store
+._*
+*.tgz
+.Spotlight-V100
+.Trashes
+npm-debug.log
+Thumbs.db
+node_modules
+.vscode
