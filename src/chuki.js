@@ -12,7 +12,6 @@ import insert from './chuki-methods/insert'
  */
 export default class Chuki {
   constructor() {
-    this.htmlFile = null
     this.htmlString = null
     this.components = []
     this.events = []

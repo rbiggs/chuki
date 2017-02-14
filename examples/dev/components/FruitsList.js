@@ -8,13 +8,16 @@ class FruitsList extends Chuki {
   }
 
   render() {
+    const li = () => (`
+      ${fruits.map(fruit => `
+        <li>${fruit}</li>
+      `).join('')}`)
+
     return (`
       <h2>3. Interactive List Example</h2>
       <h3>Choose a Fruit:</h3>
       <ul>
-        ${fruits.map(fruit => `
-          <li>${fruit}</li>
-        `).join('')}
+        ${li()}
       </ul>
       <p id='result'></p>
     `)
@@ -32,6 +35,7 @@ class FruitsList extends Chuki {
         margin: '0 0 2rem 0',
         border: 'solid 1px #ccc',
         width: 200,
+        backgroundColor: '#fff',
 
         li: {
           listStyle: 'none',
@@ -39,6 +43,7 @@ class FruitsList extends Chuki {
           padding: '5px 10px',
           borderBottom: 'solid 1px #ccc',
           cursor: 'pointer',
+          transition: 'all .25s ease-out',
 
           ':last-of-type': {
             border: 'none'
@@ -50,7 +55,7 @@ class FruitsList extends Chuki {
         }
       },
       strong: {
-        color: '#007aff'
+        color: '#3a6da8'
       }
     })
   }
