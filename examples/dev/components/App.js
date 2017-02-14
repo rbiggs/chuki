@@ -1,14 +1,19 @@
 import Chuki from '../../../dist/chuki'
+import {html} from '../../../dist/chuki'
 import HelloWorld from './HelloWorld'
 import DumbComponent from './DumbComponent'
 import FruitsList from './FruitsList'
+import Counter from './Counter'
 
-// Define component that uses other components:
+/**
+ * This class imports and integrates DumbComponent, HelloWorld and FruitsList as its children. Notice that DumbComponent, although not a Chuki component but a simple function that returns a template literal, can be integrate the same a true components.
+ */
 class App extends Chuki {
   constructor() {
     super()
     this.loadComponent(DumbComponent)
     this.loadComponent(HelloWorld)
+    this.loadComponent(Counter)
     this.loadComponent(FruitsList)
     
     // Remove event:
@@ -21,12 +26,14 @@ class App extends Chuki {
 
   // Compose view with sub-components:
   render() {
-    return (`
+    return (html`
       <div>
         <DumbComponent></DumbComponent>
         <HelloWorld></HelloWorld>
+        <Counter></Counter>
         <FruitsList></FruitsList>
-        <h2>4. Unbind Hello World Input</h2>
+        <h2>5. Unbind Hello World Input</h2>
+        <p>This button accesses the HelloWorld off method through its imported instance inside the App component.</p>
         <p>
           <button id='stop'>Stop Hello World Updates!</button>
         </p>

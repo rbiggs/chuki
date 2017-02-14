@@ -2,6 +2,7 @@ import injectInDOM from './chuki-methods/injectInDOM'
 import bindEvents from './chuki-methods/bindEvents'
 import unbindEvents from './chuki-methods/unbindEvents'
 import insert from './chuki-methods/insert'
+import html from './chuki-methods/html'
 
 /**
  * Chuki class (pronounced choo-kee, Hindi for "stack").
@@ -58,3 +59,5 @@ export default class Chuki {
     insert(this, element)
   }
 }
+
+export {html}

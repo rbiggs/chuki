@@ -1,15 +1,19 @@
 import Chuki from '../../../dist/chuki'
+import {html} from '../../../dist/chuki'
 
+/**
+ * This class will get imported and consumed by App.js.
+ */
 class HelloWorld extends Chuki {
   constructor() {
     super()
     this.on('#hello', 'input', this.logHello)
     this.on('#reset', 'click', this.reset)
     this.on('#turnOff', 'click', this.turnOff.bind(this))
-  };
+  }
 
   render() {
-    return (`
+    return (html`
       <h2>2. Hello World Example</h2>
       <h1 id="title">Hello</h1>
       <div>
