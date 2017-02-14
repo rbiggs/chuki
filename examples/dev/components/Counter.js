@@ -2,6 +2,13 @@ import Chuki from '../../../dist/chuki'
 import {html} from '../../../dist/chuki'
 
 /**
+ * Helper function for managing button state in counter.
+ */
+function toggleBtnState(sub, add) {
+  btnSubtract.disabled = sub
+  btnAdd.disabled = add
+}
+/**
  * This class will get imported and consumed by App.js.
  */
 
@@ -74,31 +81,26 @@ class Counter extends Chuki {
 
   subtract() {
     if (this.model <= 0) {
-      btnSubtract.disabled = true
-      btnAdd.disabled = false
+      toggleBtnState(true, false)
       return
     } else if (this.model == 1) {
-      btnSubtract.disabled = true
-      btnAdd.disabled = false
+      toggleBtnState(true, false)
       counterValue.textContent = --this.model
     } else {
-      btnSubtract.disabled = false
-      btnAdd.disabled = false
+      toggleBtnState(false, false)
       counterValue.textContent = --this.model
     }
   }
 
   add() {
     if (this.model >= 10) {
-      btnAdd.disabled = true
-      btnSubtract.disabled = false
+      toggleBtnState(false, true)
       return
     } else if (this.model == 9) {
-      btnSubtract.disabled = false
-      btnAdd.disabled = true
+      toggleBtnState(false, true)
       counterValue.textContent = ++this.model
     } else {
-      btnSubtract.disabled = false
+      toggleBtnState(false, false)
       counterValue.textContent = ++this.model
     }
   }
