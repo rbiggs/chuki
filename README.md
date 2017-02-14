@@ -21,6 +21,7 @@ import Chuki from './chuki'
 // Define new class:
 class People extends Chuki {
   // Stuff goes here...
+}
 ```
 
 Using `render()` to Define a Template
