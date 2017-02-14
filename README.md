@@ -61,7 +61,7 @@ With the above example we're assuming there is an array called `people`. We use 
 A Component's Constructor
 -------------------------
 
-You can also give your component a constructor. You would use to to set up instance specific functions, bind events, etc. When defining your component's constructor, be sure to always put the `super()` method first. This will give you proper access to the Chuki class.
+You can also give your component a constructor. You would use it to set up instance specific functions, bind events, etc. When defining your component's constructor, be sure to always put the `super()` method first. This will give you proper access to the Chuki class.
 
 ```js
 import Chuki from 'chuki'
