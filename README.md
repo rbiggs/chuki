@@ -92,7 +92,7 @@ With the above example we're assuming there is an array called `people`. We use 
 `bind()`: Adding Events to a Component
 --------------------------------------
 
-You define events for your component this `bind()` method. This takes an array of event objects. Each object can have up to four members: `selector`, `type`, `callback` and `delegate`.  Selector is the element to attach the event to, type is the event type: 'click', input, 'change', callback is the event's callback and delegate is an optional element to capture the event. Use this is you want to register an event on a list and capture it on the list items. Delegated events lets you manage events for a series of elements by attaching it to the parent.
+You define events for your component this `bind()` method. This takes an array of event objects. Each object can have up to four members: `selector`, `type`, `callback` and `delegate`.  Selector is the element to attach the event to, type is the event type: 'click', input, 'change', callback is the event's callback and delegate is an optional element to capture the event. Use this is you want to register an event on a list and capture it on the list items. Delegated events let you manage events for a series of elements by attaching it to the parent.
 
 A generic selector may result in the event getting attached to an element other than the one you intended. As such you should prefer selectors that are unique, such as an id or some other more complex CSS selector. Examples of good selectors are:
 
