@@ -492,7 +492,9 @@ class FruitsList extends Chuki {
 export default new FruitsList();
 ```
 
-Now we're going to import the above two files into another component, load them, put them in its markup. After importing `HelloWorld`, we load it in the component's constructor: `this.loadComponent(HelloWorld)`. After that we can use `<HelloWorld></HelloWorld>` in the component's template. At render time, Chuki will convert that tag to lowercase to comply with the current custom element spec from the W3C.
+***Import and Use Child Components in App***
+
+Now we're going to import the above two files into another component, load them, put them in its markup. After importing `HelloWorld`, we load it in the component's constructor: `this.loadComponent(HelloWorld)`. After that we can use `<HelloWorld></HelloWorld>` in the component's template. Same thing for `FruitsList`. At render time, Chuki will convert the tag to lowercase to comply with the current custom element spec from the W3C.
 
 ```js
 import {Chuki, html} from '../dist/chuki'
