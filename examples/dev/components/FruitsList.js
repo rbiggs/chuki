@@ -8,13 +8,13 @@ import fruits from '../data/fruits'
 class FruitsList extends Chuki {
   constructor() {
     super()
-    this.on('ul', 'click', this.announce, 'li')
   }
 
+  // Define template for component:
   render() {
     const li = () => (html`
       ${fruits.map(fruit => html`
-        <li data-id='${fruit.id}'><span>${fruit.name}</span> $${fruit.price}</li>
+        <li data-id='${fruit.id}'><span>${fruit.name}</span> $${fruit.price} lb.</li>
       `).join('')}`)
 
     return (html`
@@ -27,8 +27,55 @@ class FruitsList extends Chuki {
     `)
   }
 
+  // Bind events:
+  bind() {
+    return ([
+      {
+        selector: 'ul',
+        type: 'click', 
+        callback: this.announce,
+        delegate: 'li'
+      }
+    ])
+  }
+
+  // Define callbacks for events.
+  announce(e) {
+    const id = this.dataset.id
+    const choice = fruits.filter(fruit => id === fruit.id)[0]
+    const siblings = Array.prototype.slice.apply(this.parentNode.children)
+    siblings.forEach(el => {
+      el.classList.remove('selected')
+    })
+    this.classList.add('selected')
+    const setResults = (bc, c) => {
+      result.style.backgroundColor = bc
+      result.style.color = c
+      result.style.borderWidth = '1px'
+      result.style.display = 'block'
+    }
+    switch (choice.name) {
+      case 'Apple':
+        setResults('red', '#fff')
+        break;
+      case 'Orange':
+        setResults('#ffc100', '#000')
+        break;
+      case 'Banana':
+        setResults('yellow', '#000')
+        break;
+      case 'Watermelon':
+        setResults('pink', '#000')
+        break;
+      case 'Mango':
+        setResults('#ff9400', '#fff')
+        break;
+    }
+    result.innerHTML = `You Selected: <strong>${choice.name}</strong>`
+  }
+
+  // Return virtual stylesheet object:
   style() {
-    // Return nested virtual stylesheet object:
     return (
     {
       h3: {
@@ -77,44 +124,10 @@ class FruitsList extends Chuki {
         fontVariant: 'small-caps',
         width: '202px',
         'box-sizing': 'border-box',
-        border: 'solid 0px #666'
+        border: 'solid 0px #666',
+        transition: 'all .5s ease-out'
       }
     })
-  }
-
-  announce(e) {
-    const id = this.dataset.id
-    const choice = fruits.filter(fruit => id === fruit.id)[0]
-    const siblings = Array.prototype.slice.apply(this.parentNode.children)
-    console.dir(siblings)
-    siblings.forEach(el => {
-      el.classList.remove('selected')
-    })
-    this.classList.add('selected')
-    const setResults = (bc, c) => {
-      result.style.backgroundColor = bc
-      result.style.color = c
-      result.style.borderWidth = '1px'
-      result.style.display = 'block'
-    }
-    switch (choice.name) {
-      case 'Apple':
-        setResults('red', '#fff')
-        break;
-      case 'Orange':
-        setResults('#ffc100', '#000')
-        break;
-      case 'Banana':
-        setResults('yellow', '#000')
-        break;
-      case 'Watermelon':
-        setResults('pink', '#000')
-        break;
-      case 'Mango':
-        setResults('#ff9400', '#fff')
-        break;
-    }
-    result.innerHTML = `You selected: <strong>${choice.name}</strong>`
   }
 }
 

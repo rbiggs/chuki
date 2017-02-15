@@ -9,7 +9,6 @@ import createStylesheet from './style'
  */
 export default (self, element) => {
   self.injectInDOM(element)
-  self.bindEvents(element)
   self.renderComponents()
   if(self.style) {
     const styles = self.style()

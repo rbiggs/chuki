@@ -16,10 +16,9 @@ class Counter extends Chuki {
   constructor() {
     super()
     this.model = 0
-    this.on('#btnSubtract', 'click', this.subtract.bind(this))
-    this.on('#btnAdd', 'click', this.add.bind(this))
   }
 
+  // Define template for component:
   render() {
     return (html`
       <h2>3. Counter Example</h2>
@@ -32,53 +31,23 @@ class Counter extends Chuki {
     `)
   }
 
-  style() {
-    return ({
-      '.counter-sheath': {
-        display: 'flex',
-        padding: '5px 10px',
-        border: 'solid 1px #ccc',
-        width: 110,
-        boxSizing: 'border-box',
-        backgroundColor: '#fff'
+  // Bind events:
+  bind() {
+    return ([
+      {
+        selector: '#btnSubtract',
+        type: 'click',
+        callback: this.subtract.bind(this)
       },
-      'h2 + p': {
-        margin: 0
-      },
-      span: {
-        display: 'inline-block',
-        width: 40,
-        margin: '0 2px',
-        textAlign: 'center',
-        border: 'solid 1px #666',
-        backgroundColor: '#3a6da8',
-        color: '#fff'
-      },
-      button: {
-        height: 22,
-        cursor: 'pointer',
-        border: 'solid 1px #ccc',
-        borderRadius: '4px',
-        backgroundColor: '#fff',
-        ':hover': {
-          backgroundColor: '#3a6da8',
-          color: '#fff'
-        },
-        ':focus': {
-          outline: 'none'
-        }
-      },
-      'button[disabled]': {
-        cursor: 'default',  
-        opacity: '.5',
-        ':hover': {
-          color: '#3a6da8',
-          backgroundColor: '#84b1e4'
-        }
+      {
+        selector: '#btnAdd',
+        type: 'click',
+        callback: this.add.bind(this)
       }
-    })
+    ])
   }
 
+  // Define callbacks for events.
   subtract() {
     if (this.model <= 0) {
       toggleBtnState(true, false)
@@ -103,6 +72,54 @@ class Counter extends Chuki {
       toggleBtnState(false, false)
       counterValue.textContent = ++this.model
     }
+  }
+
+  // Return virtual stylesheet object:
+  style() {
+    return ({
+      '.counter-sheath': {
+        display: 'flex',
+        padding: '5px 10px',
+        border: 'solid 1px #ccc',
+        width: 110,
+        boxSizing: 'border-box',
+        backgroundColor: '#fff'
+      },
+      'h2 + p': {
+        margin: 0
+      },
+      span: {
+        display: 'inline-block',
+        width: 40,
+        margin: '0 2px',
+        textAlign: 'center',
+        border: 'solid 1px #666',
+        backgroundColor: '#3a6da8',
+        color: '#fff'
+      },
+      button: {
+        height: 20,
+        cursor: 'pointer',
+        border: 'solid 1px #ccc',
+        borderRadius: '4px',
+        backgroundColor: '#fff',
+        ':hover': {
+          backgroundColor: '#3a6da8',
+          color: '#fff'
+        },
+        ':focus': {
+          outline: 'none'
+        }
+      },
+      'button[disabled]': {
+        cursor: 'default',  
+        opacity: '.5',
+        ':hover': {
+          color: '#3a6da8',
+          backgroundColor: '#84b1e4'
+        }
+      }
+    })
   }
 
 }

@@ -7,11 +7,9 @@ import {html} from '../../../dist/chuki'
 class HelloWorld extends Chuki {
   constructor() {
     super()
-    this.on('#hello', 'input', this.logHello)
-    this.on('#reset', 'click', this.reset)
-    this.on('#turnOff', 'click', this.turnOff.bind(this))
   }
 
+  // Define template for component:
   render() {
     return (html`
       <h2>2. Hello World Example</h2>
@@ -24,15 +22,28 @@ class HelloWorld extends Chuki {
     `)
   }
 
-  style() {
-    return ({
-      h1: {
-        color: '#3a6da8',
-        'text-shadow': '0 2px 2px rgba(0,0,0,0.25)'
+  // Bind events:
+  bind() {
+    return ([
+      {
+        selector: '#hello',
+        type: 'input',
+        callback: this.logHello
+      },
+      {
+        selector: '#reset',
+        type: 'click',
+        callback: this.reset
+      },
+      {
+        selector: '#turnOff',
+        type: 'click',
+        callback: this.turnOff.bind(this)
       }
-    })
+    ])
   }
 
+  // Define callbacks for events.
   logHello() {
     title.innerHTML = `Hello ${document.getElementById('hello').value}!`
   }
@@ -44,6 +55,17 @@ class HelloWorld extends Chuki {
 
   turnOff() {
     this.off('#hello', 'input', 'logHello')
+  }
+
+  // Return virtual stylesheet object:
+  style() {
+    return ({
+      h1: {
+        color: '#3a6da8',
+        'text-shadow': '0 2px 2px rgba(0,0,0,0.25)',
+        margin: 0
+      }
+    })
   }
 }
 

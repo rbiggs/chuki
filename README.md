@@ -16,7 +16,7 @@ Creating a Component Instance
 To create a new componet, you start by creating a new Chuki class. You do this by extending Chuki:
 
 ```js
-import Chuki from './chuki'
+import Chuki from './dist/chuki'
 
 // Define new class:
 class People extends Chuki {
@@ -24,21 +24,28 @@ class People extends Chuki {
 }
 ```
 
+In order to use templates, you also need to import in the `html` method. This is a tagged template. Use it to define your template literals. `html` is a named export so you need to enclose it in curly braces:
+
+```
+import Chuki from './dist/chuki'
+import {html} from './dist/chuki'
+```
+
 Using `render()` to Define a Template
 -------------------------------------
 
-Every component implements a `render()` function that defines the template that the component will use. The render function should return the template you want to use. Chuki uses template literals to define templates. If you are not familiar with template literals, read their [docs on Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals). In general we recommend defining your template inside `(``)`. This gives you clear delimiters within which to put your markup. Because these are template literals, you can use multi-lines without escaping new lines. You also get to use `${}` for interpolation of variables. We love the versatility of ES6 template literals without the drawbacks of proprietary offerings like JSX or other template engines. Template literals are live in current ever-green browsers. No transpiling necessary.
+Every component implements a `render()` function that defines the template that the component will use. The render function should return the template you want to use. Chuki uses template literals to define templates. If you are not familiar with template literals, read their [docs on Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals). In general we recommend defining your template inside `(``)`. This gives you clear delimiters within which to put your markup. Because these are template literals, you can use multi-lines without escaping new lines. You also get to use `${}` for interpolation of variables. We love the versatility of ES6 template literals without the drawbacks of proprietary offerings like JSX or other template engines. Template literals are live in current ever-green browsers. No transpiling necessary for them.
 
-Chuki templates are for displaying content only. They do not have inline events or styles ever. These are handled separately by the component's  `on` and `style` methods.
+Chuki templates are for displaying content only. They do not have inline events or styles ever. These are handled separately by the component's  `bind` and `style` methods.
 
 
 ```js
-import Chuki from 'chuki'
+import Chuki from './dist/chuki'
 
 // Define new class:
 class People extends Chuki {
   render() {
-    return (`
+    return (html`
       <h3>People:</h3>
       <ul>
         ${people.map(person => `
@@ -64,7 +71,8 @@ A Component's Constructor
 You can also give your component a constructor. You would use it to set up instance specific functions, bind events, etc. When defining your component's constructor, be sure to always put the `super()` method first. This will give you proper access to the Chuki class.
 
 ```js
-import Chuki from 'chuki'
+import Chuki from './dist/chuki'
+import {html} from './dist/chuki'
 
 // Define new class:
 class People extends Chuki {
@@ -75,7 +83,7 @@ class People extends Chuki {
   }
 
   render() {
-    return (`
+    return (html`
       <h3>People:</h3>
       <ul>
         ${people.map(person => `
@@ -90,39 +98,57 @@ class People extends Chuki {
 Adding Events to a Component
 ----------------------------
 
-You define events for your component in its constructor. To do so, you use the `on()` method. This can attach an event to an element or delegate and event to an element. `on()` takes a minimum of three arguments: `element`, `event` and `callback`. `element` is a CSS selector defining the element you want to attach the event to. A generic selector may result in the event getting attached to an element other than the one you intended. As such you should prefer selectors that are unique, such as an id or some other more complex CSS selector. Examples of good selectors are:
+You define events for your component this `bind()` method. This takes an array of event objects. Each object can have up to four members: `selector`, `type` and `callback`. `delegate`.  Selector is the element to attach the event to, type is the event type: 'click', input, 'change', callback is the event's callback and delegate is an optional element to capture the event. Use this is you want to register an event on a list and capture it on the list items. Delegated events lets you manage events for a series of elements by attaching it to the parent.
+
+A generic selector may result in the event getting attached to an element other than the one you intended. As such you should prefer selectors that are unique, such as an id or some other more complex CSS selector. Examples of good selectors are:
 
 * #myButton
 * .classUsedOnceOnly
 * ul>li:first-child
 
-`event` can be any event you want: click, mousedown, mouseup, input, change, etc.
-
-The callback is like any normal callback. However, to enable unbinding the event listener, you should define the callback as a method of your component. In the following example we wire up two events, one on an input and one on a button. We there define two methods on the component: `logHello` and `Reset`. Because they are defined on the component, they get passed to the `on` method as `this.logHello` and `this.reset`.
+You should define your callbacks as a methods of your component. In the following example we wire up two events, one on an input and one on a button. We then define two methods on the component: `logHello` and `Reset`. Because they are defined on the component, they get as callbacks with the `this` keyword because they are methods of this instance: `this.logHello` and `this.reset`.
 
 
 ```js
-import Chuki from 'chuki'
+import Chuki from '../dist/chuki'
+import {html} from '../dist/chuki'
 
 // Define a new class:
 class HelloWorld extends Chuki {
   constructor() {
     super()
-    this.on('#hello', 'input', this.logHello)
-    this.on('#reset', 'click', this.reset)
-  };
+  }
 
+  // Define template for component:
   render() {
-    return (`
+    return (html`
       <h2>2. Hello World Example</h2>
       <h1 id="title">Hello</h1>
       <div>
         <input id="hello" type="text"/>
         <button id="reset">Reset!</button>
+        <button id='turnOff'>Turn Off!</button>
       </div>
     `)
   }
 
+  // Bind events:
+  bind() {
+    return ([
+      {
+        selector: '#hello',
+        type: 'input',
+        callback: this.logHello
+      },
+      {
+        selector: '#reset',
+        type: 'click',
+        callback: this.reset
+      }
+    ])
+  }
+
+  // Define callbacks for events.
   logHello() {
     title.innerHTML = `Hello ${document.getElementById('hello').value}!`
   }
@@ -131,41 +157,59 @@ class HelloWorld extends Chuki {
     title.innerHTML = `Hello World`
     hello.value = `World`
   }
-}
 ```
 
 Delegated Events
 ----------------
 
-You can also created delegated events by passing a selector for the delegated element as the fourth argument of the `on` method. That way, when those elements become event targets, the event bubbles to the ancestor where the event is registered and then executes the callback. You would use this in cases where you have many items that you want to catch events on, such as list items. In the following example we pass `'li'` as the final argument to set it as the target for an event listener delegated to the list itself:
+You can also created delegated events by providing a delegate property and giving it the element you want to be the target of the event. The event bubbles from these to the ancestor where the event is registered and then executes the callback. You would use this in cases where you have many items that you want to catch events on, such as list items. In the following example we pass `'li'` as the final argument to set it as the target for an event listener delegated to the list itself:
 
 ```js
 class FruitsList extends Chuki {
   constructor() {
     super()
-    this.on('ul', 'click', this.announce, 'li')
   }
 
+  // Define template for component:
   render() {
-    return (`
-      <h2>3. Interactive List Example</h2>
+    // Define list item helper for list below:
+    const li = () => (html`
+      ${fruits.map(fruit => html`
+        <li data-id='${fruit.id}'><span>${fruit.name}</span> $${fruit.price} lb.</li>
+      `).join('')}`)
+
+    return (html`
+      <h2>4. Interactive List Example</h2>
       <h3>Choose a Fruit:</h3>
       <ul>
-        ${fruits.map(fruit => `
-          <li>${fruit}</li>
-        `).join('')}
+        ${li()}
       </ul>
       <p id='result'></p>
     `)
   }
 
+  // Bind events:
+  bind() {
+    return ([
+      {
+        selector: 'ul',
+        type: 'click',
+        callback: this.announce,
+        delegate: 'li'
+      }
+    ])
+  }
+
+  // Define callbacks for events.
   announce(e) {
-    result.innerHTML = `You selected: <strong>${this.textContent}</strong>`
+    const id = this.dataset.id
+    const choice = fruits.filter(fruit => id === fruit.id)[0]
+    result.innerHTML = `You Selected: <strong>${choice.name}</strong>`
   }
 }
 ```
 
-Delegating events for list and other multi-item collections means that you can add and remove elements without worrying about adding or removing events. It just works.
+Delegating events for lists and other multi-item collections means that you can add and remove elements without worrying about adding or removing events. It just works.
 
 Unbinding Events
 -------------
@@ -189,54 +233,83 @@ import Chuki from 'chuki'
 class HelloWorld extends Chuki {
   constructor() {
     super()
-    // Bind the callback being removed to `this`:
-    this.on('#hello', 'input', this.logHello.bind(this))
-  };
+  }
 
+  // Define template for component:
   render() {
-    return (`
+    return (html`
       <h2>2. Hello World Example</h2>
       <h1 id="title">Hello</h1>
       <div>
         <input id="hello" type="text"/>
-        <button id="turnOff">Turn Off!</button>
+        <button id='turnOff'>Turn Off!</button>
       </div>
     `)
   }
 
+  // Bind events:
+  bind() {
+    return ([
+      {
+        selector: '#hello',
+        type: 'input',
+        callback: this.logHello
+      },
+      {
+        selector: '#turnOff',
+        type: 'click',
+        callback: this.turnOff.bind(this)
+      }
+    ])
+  }
+
+  // Define callbacks for events.
   logHello() {
     title.innerHTML = `Hello ${document.getElementById('hello').value}!`
   }
 
-  turnOff('#turnOff', 'click', function() {
-    // Pass the element, event type and method name in quotes:
+  turnOff() {
     this.off('#hello', 'input', 'logHello')
-  })
+  }
 }
 ```
 
-You can also access a components `on` and `off` methods to manage events through its instance. You can do this even when the component is the child of another component. In the example below, notice how we use the `off` method of the `HelloWorld` component instance to turn its input event off from within the `App` component:
+Components also have `on` and `off` methods to manage events through its instance. You can do this even when the component is the child of another component. In the example below, notice how we use the `off` method of the `HelloWorld` component instance to turn its input event off from within the `App` component. When we want to detach an event, we need to pass the callback name quoted. Chuki will use this string to find the method on the component instance to remove it:
 
 ```js
-import Chuki from '../../../src/chuki'
-import HelloWorld from './HelloWorld'
+import Chuki from '../dist/chuki'
+import {html} from '../dist/chuki'
 
 // Define component that uses other components:
 class App extends Chuki {
   constructor() {
     super()
-    this.loadComponent(HelloWorld)
-
-    // Remove event:
-    this.on('#stop', 'click', function() {
-      // Unbind the event on the World component instance:
-      World.off('#hello', 'input', 'logHello')
-      alert('No more input!')
-    })
   }
 
+  // Define template:
   render() {
-    // Template here...
+    return (html`
+      // Template here...
+    `)
+  }
+
+  // Bind event to turn off HelloWorld:
+  bind() {
+    return ([
+      {
+        selector: '#stop',
+        type: 'click',
+        callback: this.turnoffHelloWorld
+      }
+    ])
+  }
+
+  // Define callbacks for events.
+  turnoffHelloWorld() {
+    // Unbind the event on the World component instance.
+    // Notice how the component's callback is quoted as a string:
+    HelloWorld.off('#hello', 'input', 'logHello')
+    alert('No more input!')
   }
 }
 ```
@@ -252,27 +325,43 @@ Let's say we have three components, each in their own files. We want to include 
 ***Child Component: HelloWorld.js***
 
 ```js
-import Chuki from '../src/chuki'
+import Chuki from '../dist/chuki'
+import {html} from '../dist/chuki'
 
 class HelloWorld extends Chuki {
   constructor() {
     super()
-    this.on('#hello', 'input', this.logHello)
-    this.on('#reset', 'click', this.reset)
-  };
+  }
 
+  // Define template for component:
   render() {
-    return (`
+    return (html`
       <h2>2. Hello World Example</h2>
       <h1 id="title">Hello</h1>
       <div>
         <input id="hello" type="text"/>
         <button id="reset">Reset!</button>
-        <button id='turnOff'>Turn Off!</button>
       </div>
     `)
   }
 
+  // Bind events:
+  bind() {
+    return ([
+      {
+        selector: '#hello',
+        type: 'input',
+        callback: this.logHello
+      },
+      {
+        selector: '#reset',
+        type: 'click',
+        callback: this.reset
+      }
+    ])
+  }
+
+  // Define callbacks for events.
   logHello() {
     title.innerHTML = `Hello ${document.getElementById('hello').value}!`
   }
@@ -280,6 +369,10 @@ class HelloWorld extends Chuki {
   reset() {
     title.innerHTML = `Hello World`
     hello.value = `World`
+  }
+
+  turnOff() {
+    this.off('#hello', 'input', 'logHello')
   }
 }
 
@@ -295,25 +388,43 @@ import fruits from '../data/fruits'
 class FruitsList extends Chuki {
   constructor() {
     super()
-    this.on('ul', 'click', this.announce, 'li')
   }
 
+  // Define template for component:
   render() {
-    return (`
-      <h2>3. Interactive List Example</h2>
+    // Define list item helper for list below:
+    const li = () => (html`
+      ${fruits.map(fruit => html`
+        <li data-id='${fruit.id}'><span>${fruit.name}</span> $${fruit.price} lb.</li>
+      `).join('')}`)
+
+    return (html`
+      <h2>4. Interactive List Example</h2>
       <h3>Choose a Fruit:</h3>
       <ul>
-        ${fruits.map(fruit => `
-          <li class='${fruit}' data-id='${fruit}'>${fruit}</li>
-        `).join('')}
+        ${li()}
       </ul>
       <p id='result'></p>
     `)
   }
 
-  announce(e) {
+  // Bind events:
+  bind() {
+    return ([
+      {
+        selector: 'ul',
+        type: 'click',
+        callback: this.announce,
+        delegate: 'li'
+      }
+    ])
+  }
 
-   result.innerHTML = `You selected: <strong>${this.textContent}</strong>`
+  // Define callbacks for events.
+  announce(e) {
+    const id = this.dataset.id
+    const choice = fruits.filter(fruit => id === fruit.id)[0]
+    result.innerHTML = `You Selected: <strong>${choice.name}</strong>`
   }
 }
 
@@ -331,28 +442,16 @@ import FruitsList from './FruitsList'
 class App extends Chuki {
   constructor() {
     super()
-    // Load the imported components into this component:
     this.loadComponent(HelloWorld)
     this.loadComponent(FruitsList)
-
-    // Remove event:
-    this.on('#stop', 'click', function() {
-      // Unbind the event on the World component instance:
-      HelloWorld.off('#hello', 'input', 'logHello')
-      alert('No more input!')
-    })
   }
 
-  // Compose view with sub-components in markup:
+  // Compose view with sub-components:
   render() {
-    return (`
+    return (html`
       <div>
         <HelloWorld></HelloWorld>
         <FruitsList></FruitsList>
-        <h2>4. Unbind Hello World Input</h2>
-        <p>
-          <button id='stop'>Stop Hello World Updates!</button>
-        </p>
       </div>
     `)
   }

@@ -8,7 +8,7 @@ import delegate from './delegate'
  * @return void.
  */
 export default (self) => {
-  for (let event of self.events) {
+  for (let event of self.eventCache) {
     for (let registerEvent of document.querySelectorAll(event.selector)) {
       if (!registerEvent.getAttribute('event_id')) {
         let eventID = uuid()

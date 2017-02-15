@@ -15,13 +15,6 @@ class App extends Chuki {
     this.loadComponent(HelloWorld)
     this.loadComponent(Counter)
     this.loadComponent(FruitsList)
-    
-    // Remove event:
-    this.on('#stop', 'click', function() {
-      // Unbind the event on the World component instance:
-      HelloWorld.off('#hello', 'input', 'logHello')
-      alert('No more input!')
-    })
   }
 
   // Compose view with sub-components:
@@ -41,8 +34,26 @@ class App extends Chuki {
     `)
   }
 
+  // Bind events:
+  bind() {
+    return ([
+      {
+        selector: '#stop',
+        type: 'click',
+        callback: this.turnoffHelloWorld
+      }
+    ])
+  }
+
+  // Define callbacks for events.
+  turnoffHelloWorld() {
+    // Unbind the event on the World component instance:
+    HelloWorld.off('#hello', 'input', 'logHello')
+    alert('No more input!')
+  }
+
+  // Return nested virtual stylesheet object:
   styles() {
-    // Return nested virtual stylesheet object:
     return ({
       h1: {
         margin: 0

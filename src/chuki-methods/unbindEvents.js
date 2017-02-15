@@ -8,10 +8,10 @@
  * @return void.
  */
 export default (self, selector, event, callback) => {
-  if (self.events && self.events.length) {
-    const position = self.events.findIndex(event => event.selector === selector)
+  if (self.eventCache && self.eventCache.length) {
+    const position = self.eventCache.findIndex(event => event.selector === selector)
     const element = document.querySelector(selector)
     element.removeEventListener(event, self[callback])
-    self.events.splice(position, 1)
+    self.eventCache.splice(position, 1)
   }
 }

@@ -15,11 +15,11 @@ export default class Chuki {
   constructor() {
     this.htmlString = null
     this.components = []
-    this.events = []
+    this.eventCache = []
   }
 
   on(selector, type, callback, delegate) {
-    this.events.push({selector, type, callback, delegate})
+    this.eventCache.push({selector, type, callback, delegate})
   }
 
   off(selector, event, callback) {
@@ -56,7 +56,13 @@ export default class Chuki {
   }
 
   insert(element = this.constructor.name.toLowerCase()) {
+    const self = this
     insert(this, element)
+    if (this.bind) {
+      const evts = this.bind()
+      evts.forEach(evt => self.eventCache.push({selector: evt.selector, type: evt.type, callback: evt.callback, delegate: evt.delegate}))
+    }
+    this.bindEvents()
   }
 }
 
