@@ -1,5 +1,4 @@
-import Chuki from '../../../dist/chuki'
-import {html} from '../../../dist/chuki'
+import {Chuki, html} from '../../../dist/chuki'
 import HelloWorld from './HelloWorld'
 import DumbComponent from './DumbComponent'
 import FruitsList from './FruitsList'

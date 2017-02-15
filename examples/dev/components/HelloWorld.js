@@ -1,5 +1,4 @@
-import Chuki from '../../../dist/chuki'
-import {html} from '../../../dist/chuki'
+import {Chuki, html} from '../../../dist/chuki'
 
 /**
  * This class will get imported and consumed by App.js.

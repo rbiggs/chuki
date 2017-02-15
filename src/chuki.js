@@ -11,7 +11,7 @@ import html from './chuki-methods/html'
  * @param template A template literal.
  * @return object The Chuki class.
  */
-export default class Chuki {
+class Chuki {
   constructor() {
     this.htmlString = null
     this.components = []
@@ -66,4 +66,4 @@ export default class Chuki {
   }
 }
 
-export {html}
+export {Chuki, html}

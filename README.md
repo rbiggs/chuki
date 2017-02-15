@@ -10,37 +10,44 @@ Building
 --------
 Open your terminal, `cd` to this folder and run `npm i`. When it is done, you can build Chuki by running `webpack`. The result is put in `dist`. If you don't have Webpack installed globally, you'll need to run `npm i -g webpack` first.
 
-Creating a Component Instance
------------------------------
+Creating a Component Class
+--------------------------
 
-To create a new componet, you start by creating a new Chuki class. You do this by extending Chuki:
+To create a new component, you start by creating a new Chuki class. First you need to import Chuki. You also need to import html from Chuki to create templates. After importing Chuki, you to create your component, giving it a name, by extending Chuki:
 
 ```js
-import Chuki from './dist/chuki'
+import {Chuki, html} from '../dist/chuki'
 
 // Define new class:
 class People extends Chuki {
   // Stuff goes here...
 }
-```
 
-In order to use templates, you also need to import in the `html` method. This is a tagged template. Use it to define your template literals. `html` is a named export so you need to enclose it in curly braces:
-
+// After defining the component, you need to create an instance of it to use in your app:
+export default new People();
 ```
-import Chuki from './dist/chuki'
-import {html} from './dist/chuki'
-```
+With the above instance defined, you'll be able to import and mount it inside your app component as a child. We'll show this further ahead.
 
-Using `render()` to Define a Template
+Notice that, along with `Chuki`, we also import `html`. This is a tagged template function that you will use to define your component's template. This brings us the follow important point about Chuki:
+
+Separation of Concerns
+----------------------
+
+Many frameworks take the approach of encouraging developers to combine template markup with events, properties, and inline styles. This results in a tangled mess of spaghetti code that is not easy to understand. Chuki avoids this by adopting the principle of separation of concerns. This divides your component into three spheres:
+
+1. The `render()` method is used to define the template for your component. However, unlike other template systems, Chuki templates have a single purpose: to display the component's data. This code does not contain event handlers nor inline CSS definitions. This is about how to render the component's data.
+2. The `bind()` method is used to define any event listeners for your component. You can event set up delegated events for items with many children for better efficiency.
+3. The `style()` method is used to define a virtual stylesheet scoped to your component. Since this is a stylesheet, you are not restricted by the limitations of inline styles. You can use sibling selectors, child selectors, pseudo elements, hover selectors, etc.
+
+This pattern means you have one clear place to look for how data is rendered, how events are implemented, and where styles are defined.
+
+Defining a Template
 -------------------------------------
 
-Every component implements a `render()` function that defines the template that the component will use. The render function should return the template you want to use. Chuki uses template literals to define templates. If you are not familiar with template literals, read their [docs on Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals). In general we recommend defining your template inside `(``)`. This gives you clear delimiters within which to put your markup. Because these are template literals, you can use multi-lines without escaping new lines. You also get to use `${}` for interpolation of variables. We love the versatility of ES6 template literals without the drawbacks of proprietary offerings like JSX or other template engines. Template literals are live in current ever-green browsers. No transpiling necessary for them.
-
-Chuki templates are for displaying content only. They do not have inline events or styles ever. These are handled separately by the component's  `bind` and `style` methods.
-
+Every component implements a `render()` method that defines the template that the component will use.  Chuki uses template literals to define templates. If you are not familiar with template literals, read their [docs on Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals). Chuki provides the `html` tagged template function to enable you to create powerful template using ES6 template literals.
 
 ```js
-import Chuki from './dist/chuki'
+import {Chuki, html} from '../dist/chuki'
 
 // Define new class:
 class People extends Chuki {
@@ -71,8 +78,7 @@ A Component's Constructor
 You can also give your component a constructor. You would use it to set up instance specific functions, bind events, etc. When defining your component's constructor, be sure to always put the `super()` method first. This will give you proper access to the Chuki class.
 
 ```js
-import Chuki from './dist/chuki'
-import {html} from './dist/chuki'
+import {Chuki, html} from '../dist/chuki'
 
 // Define new class:
 class People extends Chuki {
@@ -110,8 +116,7 @@ You should define your callbacks as a methods of your component. In the followin
 
 
 ```js
-import Chuki from '../dist/chuki'
-import {html} from '../dist/chuki'
+import {Chuki, html} from '../dist/chuki'
 
 // Define a new class:
 class HelloWorld extends Chuki {
@@ -227,7 +232,7 @@ this.off('#hello', 'input', 'logHello')
 
 
 ```js
-import Chuki from 'chuki'
+import {Chuki, html} from '../dist/chuki'
 
 // Define a new class:
 class HelloWorld extends Chuki {
@@ -277,8 +282,7 @@ class HelloWorld extends Chuki {
 Components also have `on` and `off` methods to manage events through its instance. You can do this even when the component is the child of another component. In the example below, notice how we use the `off` method of the `HelloWorld` component instance to turn its input event off from within the `App` component. When we want to detach an event, we need to pass the callback name quoted. Chuki will use this string to find the method on the component instance to remove it:
 
 ```js
-import Chuki from '../dist/chuki'
-import {html} from '../dist/chuki'
+import {Chuki, html} from '../dist/chuki'
 
 // Define component that uses other components:
 class App extends Chuki {
@@ -325,8 +329,7 @@ Let's say we have three components, each in their own files. We want to include 
 ***Child Component: HelloWorld.js***
 
 ```js
-import Chuki from '../dist/chuki'
-import {html} from '../dist/chuki'
+import {Chuki, html} from '../dist/chuki'
 
 class HelloWorld extends Chuki {
   constructor() {
@@ -382,7 +385,7 @@ export default new HelloWorld()
 ***Child Component: FruitsList.js***
 
 ```js
-import Chuki from '../src/chuki';
+import {Chuki, html} from '../dist/chuki'
 import fruits from '../data/fruits'
 
 class FruitsList extends Chuki {
@@ -434,7 +437,7 @@ export default new FruitsList();
 Now we're going to import the above two files into another component, load them, put them in its markup. After importing `HelloWorld`, we load it in the component's constructor: `this.loadComponent(HelloWorld)`. After that we can use `<HelloWorld></HelloWorld>` in the component's template. At render time, Chuki will convert that tag to lowercase to comply with the current custom element spec from the W3C.
 
 ```js
-import Chuki from '../src/chuki'
+import {Chuki, html} from '../dist/chuki'
 import HelloWorld from './HelloWorld'
 import FruitsList from './FruitsList'
 
@@ -470,7 +473,7 @@ You can use the `style()` method to define a virtual stylesheet for a component.
 Here's an example of how to create a virtual stylesheet:
 
 ```js
-import Chuki from '../../../src/chuki';
+import {Chuki, html} from '../dist/chuki'
 import fruits from '../data/fruits'
 
 class FruitsList extends Chuki {
