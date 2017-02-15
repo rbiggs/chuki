@@ -2,7 +2,7 @@ Chuki
 =====
 (pronounced Choo-kee, Hindi for "stack")
 
-An ES6 library using template literals to enable composing widgets.
+An ES6 library using template literals to make components.
 
 This is a simple view template library that uses template literals. It also lets you add events, including delegated events, remove events, and add virtual stylesheets scoped to a component.
 
