@@ -28,7 +28,7 @@ export default new People();
 ```
 With the above instance defined, you'll be able to import and mount it inside your app component as a child. We'll show this further ahead.
 
-Notice that, along with `Chuki`, we also import `html`. This is a tagged template function that you will use to define your component's template. This brings us the follow important point about Chuki:
+Notice that, along with `Chuki`, we also import `html`. This is a tagged template function that you will use to define your component's template. This brings us the following important point about Chuki:
 
 Separation of Concerns
 ----------------------
