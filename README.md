@@ -306,6 +306,76 @@ class App extends Chuki {
 }
 ```
 
+`style()`: Virtual stylesheets
+------------------------------
+
+You can use the `style()` method to define a virtual stylesheet for a component. Never put inline styles in a component's template. The template is only for displaying the component's content. Styles can be included with the component by means of the `style()` method. This uses a simple and straightforward object notation to define a virtual stylesheet scoped to the component. Because this is an object, singular properties do not require quotes. Hyphenated CSS properties must be either camel cased or quoted. All CSS property values must be quoted. If a CSS property has a pixel-based value, you can pass it as a plain number. It will get "px" added to it automatically. You can nest in the component's child selectors, as well as pseudo elements and hover states, similar to how SASS and LESS do.
+
+Here's an example of how to create a virtual stylesheet:
+
+```js
+import {Chuki, html} from '../dist/chuki'
+import fruits from '../data/fruits'
+
+class FruitsList extends Chuki {
+  constructor() {
+    super()
+    this.on('ul', 'click', this.announce, 'li')
+  }
+
+  render() {
+    return (`
+      <h2>3. Interactive List Example</h2>
+      <h3>Choose a Fruit:</h3>
+      <ul>
+        ${fruits.map(fruit => `
+          <li>${fruit}</li>
+        `).join('')}
+      </ul>
+      <p id='result'></p>
+    `)
+  }
+
+  // Create a virtual stylesheet:
+  style() {
+    // Return nested virtual stylesheet object:
+    return ({
+      h3: {
+        margin: '0 0 10px 0',
+      },
+      ul: {
+        padding: '0',
+        margin: '0 0 2rem 0',
+        border: 'solid 1px #ccc',
+        width: '200px',
+
+        li: {
+          listStyle: 'none',
+          margin: '0',
+          padding: '5px 10px',
+          borderBottom: 'solid 1px #ccc',
+          cursor: 'pointer',
+
+          ':last-of-type': {
+            border: 'none'
+          },
+
+          ':hover': {
+            backgroundColor: '#ccc'
+          }
+        }
+      },
+      strong: {
+        color: '#007aff'
+      }
+    })
+  }
+
+  announce(e) {
+    result.innerHTML = `You selected: <strong>${this.textContent}</strong>`
+  }
+}
+```
 
 Including a Component Inside Another Component
 ----------------------------------------------
@@ -451,75 +521,3 @@ class App extends Chuki {
 export default new App()
 ```
 
-
-
-`style()`: Virtual stylesheets
-------------------------------
-
-You can use the `style()` method to define a virtual stylesheet for a component. Never put inline styles in a component's template. The template is only for displaying the component's content. Styles can be included with the component by means of the `style()` method. This uses a simple and straightforward object notation to define a virtual stylesheet scoped to the component. Because this is an object, singular properties do not require quotes. Hyphenated CSS properties must be either camel cased or quoted. All CSS property values must be quoted. If a CSS property has a pixel-based value, you can pass it as a plain number. It will get "px" added to it automatically. You can nest in the component's child selectors, as well as pseudo elements and hover states, similar to how SASS and LESS do.
-
-Here's an example of how to create a virtual stylesheet:
-
-```js
-import {Chuki, html} from '../dist/chuki'
-import fruits from '../data/fruits'
-
-class FruitsList extends Chuki {
-  constructor() {
-    super()
-    this.on('ul', 'click', this.announce, 'li')
-  }
-
-  render() {
-    return (`
-      <h2>3. Interactive List Example</h2>
-      <h3>Choose a Fruit:</h3>
-      <ul>
-        ${fruits.map(fruit => `
-          <li>${fruit}</li>
-        `).join('')}
-      </ul>
-      <p id='result'></p>
-    `)
-  }
-
-  // Create a virtual stylesheet:
-  style() {
-    // Return nested virtual stylesheet object:
-    return ({
-      h3: {
-        margin: '0 0 10px 0',
-      },
-      ul: {
-        padding: '0',
-        margin: '0 0 2rem 0',
-        border: 'solid 1px #ccc',
-        width: '200px',
-
-        li: {
-          listStyle: 'none',
-          margin: '0',
-          padding: '5px 10px',
-          borderBottom: 'solid 1px #ccc',
-          cursor: 'pointer',
-
-          ':last-of-type': {
-            border: 'none'
-          },
-
-          ':hover': {
-            backgroundColor: '#ccc'
-          }
-        }
-      },
-      strong: {
-        color: '#007aff'
-      }
-    })
-  }
-
-  announce(e) {
-    result.innerHTML = `You selected: <strong>${this.textContent}</strong>`
-  }
-}
-```
