@@ -370,10 +370,6 @@ class FruitsList extends Chuki {
       }
     })
   }
-
-  announce(e) {
-    result.innerHTML = `You selected: <strong>${this.textContent}</strong>`
-  }
 }
 ```
 
