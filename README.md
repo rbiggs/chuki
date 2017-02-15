@@ -33,7 +33,7 @@ Notice that, along with `Chuki`, we also import `html`. This is a tagged templat
 Separation of Concerns
 ----------------------
 
-Many frameworks take the approach of encouraging developers to combine template markup with events, properties, and inline styles. This results in a tangled mess of spaghetti code that is not easy to understand. Chuki avoids this by adopting the principle of separation of concerns. This divides your component into three spheres:
+Many frameworks take the approach of encouraging developers to combine template markup with events, properties, and inline styles. This results in a tangled mess of spaghetti code that is not easy to understand or refactor. Chuki avoids this by adopting the principle of separation of concerns. This divides your component into three spheres:
 
 1. The `render()` method is used to define the template for your component. However, unlike other template systems, Chuki templates have a single purpose: to display the component's data. This code does not contain event handlers nor inline CSS definitions. This is about how to render the component's data.
 2. The `bind()` method is used to define any event listeners for your component. You can event set up delegated events for items with many children for better efficiency.
