@@ -100,7 +100,7 @@ A generic selector may result in the event getting attached to an element other 
 * .classUsedOnceOnly
 * ul>li:first-child
 
-You should define your callbacks as a methods of your component. In the following example we wire up two events, one on an input and one on a button. We then define two methods on the component: `logHello` and `Reset`. Because they are defined on the component, they get as callbacks with the `this` keyword because they are methods of this instance: `this.logHello` and `this.reset`.
+You should define your callbacks as a methods of your component. In the following example we wire up two events, one on an input and one on a button. We then define two methods on the component: `logHello` and `reset`. Because they are defined on the component, they get as callbacks with the `this` keyword because they are methods of this instance: `this.logHello` and `this.reset`.
 
 
 ```js
