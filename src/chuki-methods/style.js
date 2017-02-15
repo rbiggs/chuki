@@ -14,9 +14,7 @@ import rulesFromStyles from './style-methods/rulesFromStyles'
  */
 export default function () {
 
-  /**
-   * Reuse the same style sheet for all instances.
-   */
+  // Reuse the same style sheet for all instances.
   let sharedSheet = null
 
   /**
@@ -28,17 +26,13 @@ export default function () {
     }
     options || (options = {})
     options.prefix = !options.hasOwnProperty("prefix") ? true : !!options.prefix
-    /**
-     * Set default value to "px" for numbers with a length identifier.
-     */
+    // Set default value to "px" for numbers with a length identifier.
     options.unit = options.hasOwnProperty("unit") ? options.unit : "px"
 
     this._sheet = null
     this._prefix = null
 
-    /**
-     * Insert one or more style objects in a stylesheet.
-     */
+    // Insert one or more style objects in a stylesheet.
     this.css = function (element, styles, selector) {
       if (styles == null) return ""
       if (this._sheet == null) {
