@@ -396,8 +396,7 @@ class FruitsList extends Chuki {
   // Create a virtual stylesheet:
   style() {
     // Return nested virtual stylesheet object:
-    return (
-    {
+    return ({
       h3: {
         margin: '0 0 10px 0',
       },

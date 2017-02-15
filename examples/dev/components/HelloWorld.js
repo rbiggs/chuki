@@ -25,8 +25,7 @@ class HelloWorld extends Chuki {
   }
 
   style() {
-    return (
-    {
+    return ({
       h1: {
         color: '#3a6da8',
         'text-shadow': '0 2px 2px rgba(0,0,0,0.25)'
