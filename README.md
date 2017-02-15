@@ -28,6 +28,24 @@ export default new People();
 ```
 With the above instance defined, you'll be able to import and mount it inside your app component as a child. We'll show this further ahead.
 
+A Component's Constructor
+-------------------------
+
+You can also give your component a constructor. You would use it to set up instance specific functions, bind events, etc. When defining your component's constructor, be sure to always put the `super()` method first. This will give you proper access to the Chuki class.
+
+```js
+import {Chuki, html} from '../dist/chuki'
+
+// Define new class:
+class People extends Chuki {
+  // setup constructor:
+  constructor() {
+    super()
+    // Add methods here...
+  }
+}
+```
+
 Notice that, along with `Chuki`, we also import `html`. This is a tagged template function that you will use to define your component's template. This brings us the following important point about Chuki:
 
 Separation of Concerns
@@ -41,8 +59,8 @@ Many frameworks take the approach of encouraging developers to combine template 
 
 This pattern means you have one clear place to look for how data is rendered, how events are implemented, and where styles are defined.
 
-Defining a Template
--------------------------------------
+`render()`: Defining a Template
+-------------------------------
 
 Every component implements a `render()` method that defines the template that the component will use.  Chuki uses template literals to define templates. If you are not familiar with template literals, read their [docs on Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals). Chuki provides the `html` tagged template function to enable you to create powerful template using ES6 template literals.
 
@@ -71,38 +89,8 @@ peopleInst.insert('#app')
 
 With the above example we're assuming there is an array called `people`. We use map to loop over the array and return a template literal. The `.join('')` is necessary to prevent `map` from automatically adding a comma. Notice that we use the component's `insert` method to inject it into the desired container. All components inherit the `insert` method.
 
-
-A Component's Constructor
--------------------------
-
-You can also give your component a constructor. You would use it to set up instance specific functions, bind events, etc. When defining your component's constructor, be sure to always put the `super()` method first. This will give you proper access to the Chuki class.
-
-```js
-import {Chuki, html} from '../dist/chuki'
-
-// Define new class:
-class People extends Chuki {
-  // setup constructor:
-  constructor() {
-    super()
-    // Add methods here...
-  }
-
-  render() {
-    return (html`
-      <h3>People:</h3>
-      <ul>
-        ${people.map(person => `
-          <li>${person.name}</li>
-        `).join('')}
-      </ul>
-    `)
-  }
-}
-```
-
-Adding Events to a Component
-----------------------------
+`bind()`: Adding Events to a Component
+--------------------------------------
 
 You define events for your component this `bind()` method. This takes an array of event objects. Each object can have up to four members: `selector`, `type` and `callback`. `delegate`.  Selector is the element to attach the event to, type is the event type: 'click', input, 'change', callback is the event's callback and delegate is an optional element to capture the event. Use this is you want to register an event on a list and capture it on the list items. Delegated events lets you manage events for a series of elements by attaching it to the parent.
 
@@ -217,7 +205,7 @@ class FruitsList extends Chuki {
 Delegating events for lists and other multi-item collections means that you can add and remove elements without worrying about adding or removing events. It just works.
 
 Unbinding Events
--------------
+----------------
 
 You can unbind events using the component's `off()` method. The `off` method takes three arguments: the element the event is registered on, the event type and the callback. In order for `off` to know the context of the callback it needs to remove, you must bind its callback to the constructor's `this`:
 
@@ -320,7 +308,7 @@ class App extends Chuki {
 
 
 Including a Component Inside Another Component
-------------------------------------------
+----------------------------------------------
 
 You can nest components inside another one. You can define a component in a separate file, import it into another component and render it as a child of that component. The child component's events and methods will continue to work with the correct context.
 
@@ -465,8 +453,8 @@ export default new App()
 
 
 
-Virtual stylesheets
--------------------
+`style()`: Virtual stylesheets
+------------------------------
 
 You can use the `style()` method to define a virtual stylesheet for a component. Never put inline styles in a component's template. The template is only for displaying the component's content. Styles can be included with the component by means of the `style()` method. This uses a simple and straightforward object notation to define a virtual stylesheet scoped to the component. Because this is an object, singular properties do not require quotes. Hyphenated CSS properties must be either camel cased or quoted. All CSS property values must be quoted. If a CSS property has a pixel-based value, you can pass it as a plain number. It will get "px" added to it automatically. You can nest in the component's child selectors, as well as pseudo elements and hover states, similar to how SASS and LESS do.
 
