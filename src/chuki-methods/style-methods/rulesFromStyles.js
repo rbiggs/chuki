@@ -5,7 +5,7 @@ import isPlainObject from './isPlainObject'
 /**
  * Create styles rules from styles object.
  *
- * @param selector 
+ * @param selector
  * @param styles
  * @return object And object of style rules.
  */

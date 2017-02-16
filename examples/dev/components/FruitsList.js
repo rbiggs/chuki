@@ -31,7 +31,7 @@ class FruitsList extends Chuki {
     return ([
       {
         selector: 'ul',
-        type: 'click', 
+        type: 'click',
         callback: this.announce,
         delegate: 'li'
       }

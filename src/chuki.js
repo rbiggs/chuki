@@ -7,7 +7,7 @@ import html from './chuki-methods/html'
 /**
  * Chuki class (pronounced choo-kee, Hindi for "stack").
  * A class for creating components composed of other components using template literals.
- * 
+ *
  * @param template A template literal.
  * @return object The Chuki class.
  */
@@ -50,8 +50,9 @@ class Chuki {
           return comp()
         }
         component.insert(comp.name)
+      } else {
+        comp.insert()
       }
-      else comp.insert()
     }
   }
 

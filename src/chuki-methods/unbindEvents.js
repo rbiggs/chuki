@@ -1,6 +1,6 @@
 /**
  * Unbind events from elements.
- * 
+ *
  * @param self Refence to the class 'this'
  * @param selector The selector on which the event is bound.
  * @param event The event type: click, etc.

@@ -3,10 +3,10 @@
  *
  * @param rules The rules to add.
  * @param sheet The stylesheet to add rules to.
- * @return void. 
+ * @return void.
  */
 export default (rules, sheet) => {
-  function hyphenate(str) {
+  function hyphenate (str) {
     return str.replace(/[A-Z]/g, function($0) { return '-'+$0.toLowerCase(); })
   }
   rules.forEach(function(rule) {

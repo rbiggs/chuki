@@ -1,5 +1,5 @@
 /**
- * Event delegator. 
+ * Event delegator.
  * Allows you to register an event on an element and execute the callback in the context of define event targets.
  *
  * @param element The base element to attach the listener to.

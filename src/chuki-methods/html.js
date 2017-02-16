@@ -5,12 +5,12 @@
  * @param expressions Any JavaScript expressions you wish to evaluate.
  * @return string A string of markup representing DOM elements.
  */
-export default function (template, ...expressions) {
+export default function(template, ...expressions) {
   return template.reduce((accumulator, part, i) => {
-    let expression = expressions[i - 1];
+    let expression = expressions[i - 1]
     if (Array.isArray(expression)) {
-      expression = expression.join('' + accumulator.match(/(\s+)$/)[1]);
+      expression = expression.join('' + accumulator.match(/(\s+)$/)[1])
     }
-    return accumulator + expression + part;
-  });
+    return accumulator + expression + part
+  })
 }
