@@ -11,9 +11,12 @@ class FruitsList extends Chuki {
 
   // Define template for component:
   render() {
+    // Define function to render list item:
     const li = () => (html`
       ${fruits.map(fruit => html`
-        <li data-id='${fruit.id}'><span>${fruit.name}</span> $${fruit.price} lb.</li>
+        <li data-id='${fruit.id}'>
+          <span>${fruit.name}</span> $${fruit.price} lb.
+        </li>
       `).join('')}`)
 
     return (html`
@@ -38,7 +41,7 @@ class FruitsList extends Chuki {
     ])
   }
 
-  // Define callbacks for events.
+  // Define callback for event: announce.
   announce(e) {
     const id = this.dataset.id
     const choice = fruits.filter(fruit => id === fruit.id)[0]

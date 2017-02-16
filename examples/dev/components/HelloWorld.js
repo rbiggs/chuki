@@ -42,7 +42,7 @@ class HelloWorld extends Chuki {
     ])
   }
 
-  // Define callbacks for events.
+  // Define callbacks for events: logHello, reset, turnOff.
   logHello() {
     title.innerHTML = `Hello ${document.getElementById('hello').value}!`
   }

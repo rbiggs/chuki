@@ -5,7 +5,7 @@ import FruitsList from './FruitsList'
 import Counter from './Counter'
 
 /**
- * This class imports and integrates DumbComponent, HelloWorld and FruitsList as its children. Notice that DumbComponent, although not a Chuki component but a simple function that returns a template literal, can be integrate the same a true components.
+ * This class imports and integrates DumbComponent, HelloWorld, Counter and FruitsList as its children. Notice that DumbComponent, although not a Chuki component but a simple function that returns a template literal, can be integrate the same as true components.
  */
 class App extends Chuki {
   constructor() {

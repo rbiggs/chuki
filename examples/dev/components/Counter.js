@@ -46,7 +46,7 @@ class Counter extends Chuki {
     ])
   }
 
-  // Define callbacks for events.
+  // Define callbacks for events: subtract, add.
   subtract() {
     if (this.model <= 0) {
       toggleBtnState(true, false)
