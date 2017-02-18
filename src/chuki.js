@@ -26,8 +26,8 @@ class Chuki {
     this.unbindEvents(selector, event, callback)
   }
 
-  loadComponent(dependency) {
-    this.components.push(dependency)
+  loadComponent(component) {
+    this.components.push(component)
   }
 
   injectInDOM(element) {

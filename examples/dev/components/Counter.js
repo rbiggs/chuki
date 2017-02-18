@@ -123,4 +123,4 @@ class Counter extends Chuki {
 
 }
 
-export default new Counter();
+export default new Counter()
