@@ -1,3 +1,5 @@
+import append from './append'
+import createElements from './createElements'
 /**
  * Inject rendered component into DOM.
  *
@@ -9,5 +11,6 @@
 export default (self, element) => {
   self.htmlString = self.render();
   const el = document.querySelector(element)
-  el.insertAdjacentHTML('beforeend', self.htmlString)
+  const nodes = createElements(self.htmlString)
+  append(element, nodes)
 }

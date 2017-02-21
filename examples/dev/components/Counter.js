@@ -113,9 +113,10 @@ class Counter extends Chuki {
       'button[disabled]': {
         cursor: 'default',
         opacity: '.5',
+        backgroundColor: '#ccc',
         ':hover': {
           color: '#3a6da8',
-          backgroundColor: '#84b1e4'
+          backgroundColor: '#ccc'
         }
       }
     })

@@ -49,14 +49,14 @@ class Chuki {
         component.render = function () {
           return comp()
         }
-        component.insert(comp.name)
+        component.appendTo(comp.name)
       } else {
-        comp.insert()
+        comp.appendTo()
       }
     }
   }
 
-  insert(element = this.constructor.name.toLowerCase()) {
+  appendTo(element = this.constructor.name.toLowerCase()) {
     const self = this
     insert(this, element)
     if (this.bind) {
