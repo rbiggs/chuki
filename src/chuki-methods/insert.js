@@ -8,7 +8,7 @@ import createStylesheet from './style'
  * @return void.
  */
 export default (self, element) => {
-  self.injectInDOM(element)
+  self.mount(element)
   self.renderComponents()
   if(self.style) {
     const styles = self.style()

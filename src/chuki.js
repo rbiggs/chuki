@@ -1,4 +1,4 @@
-import injectInDOM from './chuki-methods/injectInDOM'
+import mount from './chuki-methods/mount'
 import bindEvents from './chuki-methods/bindEvents'
 import unbindEvents from './chuki-methods/unbindEvents'
 import insert from './chuki-methods/insert'
@@ -30,8 +30,8 @@ class Chuki {
     this.components.push(component)
   }
 
-  injectInDOM(element) {
-    injectInDOM(this, element)
+  mount(element) {
+    mount(this, element)
   }
 
   bindEvents() {
