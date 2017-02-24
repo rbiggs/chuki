@@ -1,5 +1,4 @@
-![Picture](http://chocolatechip-ui.github.io/v4/images/logos/chuki-tiny.png) 
-Chuki
+![Picture](http://chocolatechip-ui.github.io/v4/images/logos/chuki-tiny.png) Chuki
 ===========
 (pronounced Choo-kee, Hindi for "stack")
 
