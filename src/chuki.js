@@ -13,7 +13,7 @@ import html from './chuki-methods/html'
  */
 class Chuki {
   constructor() {
-    this.htmlString = null
+    this.template = null
     this.components = []
     this.eventCache = []
   }

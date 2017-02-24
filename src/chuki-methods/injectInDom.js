@@ -9,8 +9,8 @@ import createElements from './createElements'
  */
 
 export default (self, element) => {
-  self.htmlString = self.render();
+  self.template = self.render();
   const el = document.querySelector(element)
-  const nodes = createElements(self.htmlString)
+  const nodes = createElements(self.template)
   append(element, nodes)
 }

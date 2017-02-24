@@ -1,6 +1,8 @@
+![Picture](http://chocolatechip-ui.github.io/v4/images/logos/chuki-tiny.png) 
 Chuki
-=====
+===========
 (pronounced Choo-kee, Hindi for "stack")
+
 
 An ES6 library using template literals to make components.
 
