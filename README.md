@@ -7,6 +7,12 @@ An ES6 library using template literals to make components.
 
 This is a simple view template library that uses template literals. It also lets you add events, including delegated events, remove events, and add virtual stylesheets scoped to a component.
 
+Live Examples
+-------------
+
+[Examples](https://codepen.io/rbiggs/pen/ZLNxxZ?editors=0010)
+[Examples Simplified](https://codepen.io/rbiggs/pen/pePajZ?editors=1010)
+
 Building
 --------
 Open your terminal, `cd` to this folder and run `npm i`. When it is done, you can build Chuki by running `webpack`. The result is put in `dist`. If you don't have Webpack installed globally, you'll need to run `npm i -g webpack` first.
@@ -116,7 +122,7 @@ class HelloWorld extends Chuki {
   // Define template for component:
   render() {
     return (html`
-      <h2>2. Hello World Example</h2>
+      <h2>1. Hello World Example</h2>
       <h1 id="title">Hello</h1>
       <div>
         <input id="hello" type="text"/>
@@ -144,13 +150,19 @@ class HelloWorld extends Chuki {
 
   // Define callbacks for events.
   logHello() {
+    var title = document.querySelector('#title')
     title.innerHTML = `Hello ${document.getElementById('hello').value}!`
   }
 
   reset() {
+    var title = document.querySelector('#title')
     title.innerHTML = `Hello World`
     hello.value = `World`
   }
+}
+
+const helloWorld = new HelloWorld()
+helloWorld.appendTo('body')
 ```
 
 Delegated Events
